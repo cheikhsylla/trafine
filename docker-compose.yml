@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: trafine-postgres
+    environment:
+      POSTGRES_USER: trafine
+      POSTGRES_PASSWORD: trafinepwd
+      POSTGRES_DB: trafine_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - trafine-net
+    restart: always
+
+  auth-service:
+    build: ./auth-service
+    container_name: trafine-auth-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    networks:
+      - trafine-net
+    restart: always
+
+  user-service:
+    build: ./user-service
+    container_name: trafine-user-service
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres
+    networks:
+      - trafine-net
+    restart: always
+
+  route-service:
+    build: ./route-service
+    container_name: trafine-route-service
+    ports:
+      - "8083:8080"
+    networks:
+      - trafine-net
+    restart: always
+
+  incident-service:
+    build: ./incident-service
+    container_name: trafine-incident-service
+    ports:
+      - "8084:8080"
+    depends_on:
+      - postgres
+    networks:
+      - trafine-net
+    restart: always
+
+volumes:
+  pgdata:
+
+networks:
+  trafine-net:
+    driver: bridge

@@ -1,0 +1,166 @@
+{
+  "info": {
+    "name": "TrafineSUPMAP Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/auth/register",
+              "host": ["localhost:8081"],
+              "path": ["auth", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@trafine.com\",\n  \"password\": \"user123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/auth/login",
+              "host": ["localhost:8081"],
+              "path": ["auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@trafine.com\",\n  \"password\": \"user123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8082/users",
+              "host": ["localhost:8082"],
+              "path": ["users"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Incidents",
+      "item": [
+        {
+          "name": "Create Incident",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8084/incidents",
+              "host": ["localhost:8084"],
+              "path": ["incidents"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"Accident\",\n  \"description\": \"Accident sur autoroute\",\n  \"latitude\": 45.764,\n  \"longitude\": 4.8357\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Routes",
+      "item": [
+        {
+          "name": "Get Route",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8083/routes?from=Paris&to=Lyon",
+              "host": ["localhost:8083"],
+              "path": ["routes"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "Paris"
+                },
+                {
+                  "key": "to",
+                  "value": "Lyon"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Alternatives",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8083/routes/alternatives?from=Paris&to=Lyon",
+              "host": ["localhost:8083"],
+              "path": ["routes", "alternatives"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "Paris"
+                },
+                {
+                  "key": "to",
+                  "value": "Lyon"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
